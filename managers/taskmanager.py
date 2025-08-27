@@ -7,18 +7,19 @@ class TaskManager:
         self.tasks: list[Task] = []
         self.load_tasks()
 
-    def load_tasks(self, task_data: Task):
+    def load_tasks(self):
         with JsonContextManager(self.json_path, "r") as file:
             self.tasks = [Task.model_validate(item) for item in file.data]
 
     def save_tasks(self):
-        with JSONFile(self.json_path, "w") as file:
+        with JsonContextManager(self.json_path, "w") as file:
             for task in self.tasks:
                 file.add(task.model_dump())
 
     def create(self, task_data: Task):
-        self.tasks.append(task_data)
-        self.save_tasks()
+        if Task.model_validate(task_data):
+            self.tasks.append(task_data)
+            self.save_tasks()
         return task_data
 
     def get_all(self):

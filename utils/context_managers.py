@@ -1,11 +1,12 @@
 import json
 
+
 class JsonContextManager:
     
     def __init__(self, path: str, mode: str = 'r'):
         self.path = path
         self.mode = mode
-        self.data = list[dict[str | int]] = []
+        self.data : list[dict[str, int]] = []
 
     def __enter__(self):
         if 'r' == self.mode:
