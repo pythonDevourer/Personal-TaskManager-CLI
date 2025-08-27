@@ -2,6 +2,10 @@
 from managers.taskmanager import TaskManager
 from models.task import Task
 from datetime import datetime
+import os
+
+if not os.path.exists('./data'):
+    os.mkdir('./data')
 
 tm = TaskManager()
 
